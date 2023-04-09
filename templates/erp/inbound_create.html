@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <style>
+    #container {
+        padding-left: 5rem;
+        padding-right: 5rem;
+    }
+    .input-form-box span {
+        padding-left: 20px;
+    }
+    </style>
+{% endblock %}
+
+{% block title %}
+    상세 페이지
+{#상품 디테일 안에 들어가서 보기#}
+{% endblock %}
+
+{% block content %}
+<body class="text-center">
+  <div id="container">
+    <div id="loginBox">
+      <div id="loginBoxTitle">상품 상세보기</div>
+      <div id="inputBox">
+        <div class="input-form-box">
+          <div>상품코드</div>
+          <span>{{ item.code }}</span>
+        </div>
+        <div class="input-form-box">
+          <div>상품명</div>
+          <span>{{ item.name }}</span>
+        </div>
+        <div class="input-form-box">
+          <div>상품설명</div>
+          <span>{{ item.description }}</span>
+        </div>
+        <div class="input-form-box">
+          <div>상품가격</div>
+          <span>{{ item.price }}</span>
+        </div>
+        <div class="input-form-box">
+          <div>재고</div>
+          <span>{{ item.stock }}</span>
+        </div>
+        <div class="input-form-box">
+          <div>사이즈</div>
+          <span>{{ item.size }}</span>
+        </div>
+        <div class="button-login-box">
+          <a
+            href="{% url 'erp:modify-item' item.id %}"
+            class="btn btn-primary btn-xs"
+            style="width: 100%"
+          >
+            수정하기
+          </a>
+          <a
+            href="{% url 'erp:delete-item' item.id %}"
+            class="btn btn-primary btn-xs"
+            style="width: 100%"
+          >
+            삭제하기
+          </a>
+          <a
+            href="{% url 'erp:home' %}"
+            class="btn btn-primary btn-xs"
+            style="width: 100%"
+            >뒤로 가기</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"
+  ></script>
+</body>
+{% endblock %}

@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    입고
+{# 입고 플러스버튼으로 추가 #}
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="list.css" />
+
+    <link
+      href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    {% block style %}
+    <style>
+    body {
+      margin: 50px;
+    }
+    #main-header {
+        font-size: 2rem;
+    }
+    #logo {
+        font-size: 2rem;
+    }
+    #test {
+      margin-top: 10rem;
+    }
+    #accordion .glyphicon {
+      margin-right: 10px;
+    }
+    .panel-collapse > .list-group .list-group-item:first-child {
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
+    .panel-collapse > .list-group .list-group-item {
+      border-width: 1px 0;
+    }
+    .panel-collapse > .list-group {
+      margin-bottom: 0;
+    }
+    .panel-collapse .list-group-item {
+      border-radius: 0;
+    }
+
+    #collapseOne {
+        font-size: 1.5rem;
+    }
+
+    .table {
+        font-size: 1.5rem;
+    }
+
+    #plus_btn {
+        width: 3rem;
+        font-weight: bold;
+        color: #f0f0f0;
+        background-color: #1c1f23;
+    }
+    </style>
+    {% endblock %}
+{% endblock %}
+
+
+{% block content %}
+<div class="container" id="inventory-body">
+  <div class="row" id="test">
+    <div class="col-sm-3 col-md-3">
+      <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <span class="glyphicon glyphicon-folder-close"> </span>
+              상품 관리
+            </h4>
+          </div>
+          <div id="collapseOne">
+            <ul class="list-group">
+              <li class="list-group-item">
+                <span class="glyphicon glyphicon-pencil text-primary"></span>
+                <a href="/create/">상품 등록</a>
+              </li>
+
+              <li class="list-group-item">
+                <span class="glyphicon glyphicon-ok text-success"></span>
+                <a href="{% url 'erp:inbound-move' %}">입고(상품 수량 상승)</a>
+              </li>
+
+              <li class="list-group-item">
+                <span class="glyphicon glyphicon-remove text-info"></span>
+                <a href="{% url 'erp:outbound-move' %}">출고(상품 수량 하락)</a>
+              </li>
+
+              <li class="list-group-item">
+                <span class="glyphicon glyphicon-list text-success"></span>
+                <a href="{% url 'erp:stock-list' %}">상품 갯수</a>
+                <span class="badge"></span>
+              </li>
+
+              <li class="list-group-item">
+                <span class="glyphicon glyphicon-home text-success"></span>
+                <a href="{% url 'erp:home' %}">홈화면</a>
+                <span class="badge"></span>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container my-3">
+      <table class="table">
+        <thead>
+          <tr class="table-dark">
+            <th>상품코드</th>
+            <th>상품명</th>
+            <th>재고</th>
+            <th>입고</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% if item_list %}
+          {% for it in item_list %}
+          <tr>
+            <td>{{ it.code }}</td>
+            <td>
+              <a href="{% url 'erp:detail' it.id %}">{{ it.name }}</a>
+            </td>
+            <td>{{ it.stock }} 개 남음</td>
+              <td>
+                  <form method="POST" action="{% url 'erp:inbound' it.id %}">
+                  {% csrf_token %}
+
+                      <button id="plus_btn" class="plus_btn" type="submit">+</button>
+
+                  </form>
+              </td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="3">등록된 상품이 없습니다.</td>
+          </tr>
+        {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

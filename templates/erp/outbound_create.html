@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <style>
+    #container {
+        padding-left: 5rem;
+        padding-right: 5rem;
+    }
+    </style>
+{% endblock %}
+
+{% block title %}
+    수정하기
+{#      수정하기 페이지    #}
+{% endblock %}
+
+{% block content %}
+<body class="text-center">
+  <!--  html 전체 영역을 지정하는 container -->
+  <div id="container">
+    <!--  상품등록 폼 영역을 : loginBox -->
+    <div id="loginBox">
+      <!-- 상품등록 페이지 타이틀 -->
+      <div id="loginBoxTitle">상품 수정하기</div>
+      <!-- 상품등록, 버튼 박스 / 수정하기 설정.. 어려움 -->
+      <form id="inputBox" method="POST">
+        {% csrf_token %}
+        {% include "form_errors.html" %}
+        <div class="input-form-box">
+          <label for="code">상품코드</label>
+          <input
+            type="text"
+            class="form-control"
+            name="code"
+            id="code"
+            required
+            value="{{ form.code.value|default_if_none:'' }}"
+          />
+        </div>
+        <div class="input-form-box">
+          <label for="name">상품명</label>
+          <input
+            type="text"
+            class="form-control"
+            name="name"
+            id="name"
+            required
+            value="{{ form.name.value|default_if_none:'' }}"
+          />
+        </div>
+        <div class="input-form-box">
+          <label for="description">상품설명</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="description"
+            value="{{ form.description.value|default_if_none:'' }}"
+          />
+        </div>
+        <div class="input-form-box">
+          <label for="price">상품가격</label>
+          <input
+            type="text"
+            class="form-control"
+            name="price"
+            id="price"
+            required
+            value="{{ form.price.value|default_if_none:'' }}"
+          />
+        </div>
+        <div class="input-form-box">
+          <label for="stock">재고</label>
+          <input
+            type="text"
+            class="form-control"
+            name="stock"
+            id="stock"
+            required
+            value="{{ form.stock.value|default_if_none:'' }}"
+          />
+        </div>
+        <div class="input-form-box">
+          <label for="size">사이즈</label>
+          <select name="size" id="size" required class="form-control" value="{{ form.size.value|default_if_none:'' }}">
+              <option value="Small">Small</option>
+              <option value="Medium">Medium</option>
+              <option value="Large">Large</option>
+              <option value="Free">Free</option>
+          </select>
+        </div>
+        {% if error %}
+          <div class="alert alert-danger" role="alert">
+              {{ error }}
+          </div>
+        {% endif %}
+        <div class="button-login-box">
+          <button
+            type="submit"
+            class="btn btn-primary btn-xs"
+            style="width: 100%"
+          >
+            수정하기
+          </button>
+          <a
+            href="{% url 'erp:home' %}"
+            class="btn btn-primary btn-xs"
+            style="width: 100%"
+            >뒤로 가기</a
+          >
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"
+  ></script>
+</body>
+{% endblock %}
